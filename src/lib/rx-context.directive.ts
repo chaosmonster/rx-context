@@ -4,7 +4,7 @@ import {
   EmbeddedViewRef,
   Input, OnChanges,
   OnDestroy,
-  OnInit,
+  OnInit, SimpleChange, SimpleChanges,
   TemplateRef,
   ViewContainerRef
 } from '@angular/core';
@@ -55,26 +55,22 @@ export class RxContextDirective implements OnInit, OnChanges, OnDestroy {
   ngOnInit(): void {
     this._updateView();
     if (this.rxContextOn) {
-      this._subscription = this.rxContextOn.subscribe((value) => {
-          this._context.$implicit = value || null;
-          this._updateView(RxContextViewType.DEFAULT);
-        }, (err) => {
-          if (this._errorTemplateRef) {
-            this._context.$implicit = err;
-            this._updateView(RxContextViewType.ERROR);
-          }
-        },
-        () => {
-          if (this._completeTemplateRef) {
-            this._context.$implicit = null;
-            this._updateView(RxContextViewType.COMPLETE);
-          }
-        });
+      this._handleSubscription();
     }
   }
 
-  ngOnChanges(changes): void {
-    // todo
+  ngOnChanges(changes: SimpleChanges): void {
+    if (!changes.rxContextOn.firstChange) {
+      if (this._subscription) {
+        this._subscription.unsubscribe();
+      }
+      if (this.rxContextOn) {
+        this._handleSubscription();
+      } else {
+        this._context.$implicit = null;
+        this._updateView();
+      }
+    }
   }
 
   ngOnDestroy(): void {
@@ -83,9 +79,25 @@ export class RxContextDirective implements OnInit, OnChanges, OnDestroy {
     }
   }
 
+  private _handleSubscription() {
+    this._subscription = this.rxContextOn.subscribe((value) => {
+        this._context.$implicit = value || null;
+        this._updateView(RxContextViewType.DEFAULT);
+      }, (err) => {
+        if (this._errorTemplateRef) {
+          this._context.$implicit = err;
+          this._updateView(RxContextViewType.ERROR);
+        }
+      },
+      () => {
+        if (this._completeTemplateRef) {
+          this._context.$implicit = null;
+          this._updateView(RxContextViewType.COMPLETE);
+        }
+      });
+  }
+
   private _updateView(viewType?: RxContextViewType) {
-    console.log('update: viewType', viewType);
-    console.log('update: _context', this._context);
     if (this._context.$implicit) {
       // we have a value
       // if we have next and a defaultTemplate
@@ -132,7 +144,6 @@ export class RxContextDirective implements OnInit, OnChanges, OnDestroy {
         this._emptyViewRef = this._viewContainer.createEmbeddedView(this._emptyTemplateRef, this._context);
       }
     }
-    // this.cdr.detectChanges();
   }
 }
 

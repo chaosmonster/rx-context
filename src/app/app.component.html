@@ -1,12 +1,67 @@
 <h2>Default</h2>
 <div *rxContext="let data on default$">
-  title: {{data.title}}
+  title for default example: {{data.title}}
 </div>
+<hr>
 
 <h2>Complete</h2>
-<div *rxContext="let data on complete$; complete completeBlock">
-  title: {{data.title}}
+<div *rxContext="let completeData on complete$; complete completeBlock">
+  title for complete example: {{completeData.title}}
 </div>
 <ng-template #completeBlock>
   Completed
 </ng-template>
+<hr>
+
+<h2>Error</h2>
+<div *rxContext="let successData on error$; error errorBlock">
+  title for error example: {{successData.title}}
+</div>
+<ng-template let-errorData #errorBlock>
+  {{errorData | json}} <br>
+  an error occured
+</ng-template>
+<hr>
+
+<h2>Empty to value</h2>
+<div *rxContext="let successData on emptyToValue$; empty emptyToValueBlock">
+  title for empty to value example: {{successData.title}}
+</div>
+<ng-template #emptyToValueBlock>
+  Nothing to see here, but there will come value
+</ng-template>
+<hr>
+
+<h2>Just empty</h2>
+<div *rxContext="let successData on justEmpty$; empty justEmptyBlock">
+  title for just empty example: {{successData.title}} <br>
+  will never be seen
+</div>
+<ng-template #justEmptyBlock>
+  This observable is just null
+</ng-template>
+<hr>
+
+<h2>Replace observable</h2>
+<div *rxContext="let data on replace$">
+  title for replace observable example: {{data.title}}
+</div>
+<button (click)="replaceObservable()">replace observable</button>
+<hr>
+
+<h2>Replace observable with null</h2>
+<div *rxContext="let data on replaceWithNull$">
+  title for replace observable with null example: {{data.title}}
+</div>
+<button (click)="replaceObservableWithNull()">replace observable null</button>
+<hr>
+
+<h2>Replace observable with null and empty case</h2>
+<div *rxContext="let data on replaceWithNull$; empty emptyReplaceBlock">
+  title for replace observable with null example and empty case: {{data.title}}
+</div>
+<ng-template #emptyReplaceBlock>
+  empty by replace
+</ng-template>
+<button (click)="replaceObservableWithNull()">replace observable null</button>
+<hr>
