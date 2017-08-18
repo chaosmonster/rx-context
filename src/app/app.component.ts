@@ -22,6 +22,7 @@ export class AppComponent {
     .concat(Observable.throw('some error'));
   replace$ = Observable.of({title: 'observable will be replaced on button click'});
   replaceWithNull$ = Observable.of({title: 'observable will be replaced on button click with null'});
+  replaceWithNullWithEptyCase$ = Observable.of({title: 'observable will be replaced on button click with null and show empty case'});
 
   public replaceObservable() {
     this.replace$ = Observable.of({title: 'we replaced this observable at ' + new Date().toTimeString()});
@@ -29,5 +30,9 @@ export class AppComponent {
 
   public replaceObservableWithNull() {
     this.replaceWithNull$ = null;
+  }
+
+  public replaceObservableWithNullWithEptyCase() {
+    this.replaceWithNullWithEptyCase$ = null;
   }
 }

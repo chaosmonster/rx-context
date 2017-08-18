@@ -57,11 +57,11 @@
 <hr>
 
 <h2>Replace observable with null and empty case</h2>
-<div *rxContext="let data on replaceWithNull$; empty emptyReplaceBlock">
+<div *rxContext="let data on replaceWithNullWithEptyCase$; empty emptyReplaceBlock">
   title for replace observable with null example and empty case: {{data.title}}
 </div>
 <ng-template #emptyReplaceBlock>
   empty by replace
 </ng-template>
-<button (click)="replaceObservableWithNull()">replace observable null</button>
+<button (click)="replaceObservableWithNullWithEptyCase()">replace observable null</button>
 <hr>

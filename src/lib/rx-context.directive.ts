@@ -1,5 +1,4 @@
 import {
-  ChangeDetectorRef,
   Directive,
   EmbeddedViewRef,
   Input,
@@ -69,8 +68,7 @@ export class RxContextDirective implements OnInit, OnChanges, OnDestroy {
       if (this.rxContextOn) {
         this._handleSubscription();
       } else {
-        this._context.$implicit = null;
-        this._updateView();
+        this._updateView(RxContextViewType.EMPTY);
       }
     }
   }
@@ -100,51 +98,48 @@ export class RxContextDirective implements OnInit, OnChanges, OnDestroy {
   }
 
   private _updateView(viewType?: RxContextViewType) {
-    if (this._context.$implicit) {
-      // we have a value
-      // if we have next and a defaultTemplate
-      if (viewType === RxContextViewType.DEFAULT && this._defaultTemplateRef) {
-        // clear all
-        this._viewContainer.clear();
-        this._errorViewRef = null;
-        this._completeViewRef = null;
-        this._emptyViewRef = null;
-        // set defaultView
-        this._defaultViewRef = this._viewContainer.createEmbeddedView(this._defaultTemplateRef, this._context);
-      }
-      // if we have an error and an errorTemplate
-      if (viewType === RxContextViewType.ERROR && this._errorTemplateRef) {
-        // clear all
-        this._viewContainer.clear();
-        this._defaultViewRef = null;
-        this._completeViewRef = null;
-        this._emptyViewRef = null;
-        // set errorView
-        this._errorViewRef = this._viewContainer.createEmbeddedView(this._errorTemplateRef, this._context);
-      }
+    // we have a value
+    // if we have next and a defaultTemplate
+    if (this._context.$implicit !== null && viewType === RxContextViewType.DEFAULT && this._defaultTemplateRef) {
+      // clear all
+      this._viewContainer.clear();
+      this._errorViewRef = null;
+      this._completeViewRef = null;
+      this._emptyViewRef = null;
+      // set defaultView
+      this._defaultViewRef = this._viewContainer.createEmbeddedView(this._defaultTemplateRef, this._context);
+    }
+    // if we have an error and an errorTemplate
+    if (this._context.$implicit !== null && viewType === RxContextViewType.ERROR && this._errorTemplateRef) {
+      // clear all
+      this._viewContainer.clear();
+      this._defaultViewRef = null;
+      this._completeViewRef = null;
+      this._emptyViewRef = null;
+      // set errorView
+      this._errorViewRef = this._viewContainer.createEmbeddedView(this._errorTemplateRef, this._context);
+    }
 
-    } else {
-      // we don't have a value
-      // if we have completed and a completeTemplate
-      if (viewType === RxContextViewType.COMPLETE && this._completeTemplateRef) {
-        // clear all
-        this._viewContainer.clear();
-        this._defaultViewRef = null;
-        this._errorViewRef = null;
-        this._emptyViewRef = null;
-        // set completeView
-        this._completeViewRef = this._viewContainer.createEmbeddedView(this._completeTemplateRef, this._context);
-      } else
-      // if we have an emptyTemplate
-      if (this._emptyTemplateRef) {
-        // clear all
-        this._viewContainer.clear();
-        this._defaultViewRef = null;
-        this._errorViewRef = null;
-        this._completeViewRef = null;
-        // set emptyView
-        this._emptyViewRef = this._viewContainer.createEmbeddedView(this._emptyTemplateRef, this._context);
-      }
+    // we don't have a value
+    // if we have completed and a completeTemplate
+    if (viewType === RxContextViewType.COMPLETE && this._completeTemplateRef) {
+      // clear all
+      this._viewContainer.clear();
+      this._defaultViewRef = null;
+      this._errorViewRef = null;
+      this._emptyViewRef = null;
+      // set completeView
+      this._completeViewRef = this._viewContainer.createEmbeddedView(this._completeTemplateRef, this._context);
+    } else
+    // if we have an emptyTemplate
+    if ((viewType === RxContextViewType.EMPTY || this._context.$implicit === null) && this._emptyTemplateRef) {
+      // clear all
+      this._viewContainer.clear();
+      this._defaultViewRef = null;
+      this._errorViewRef = null;
+      this._completeViewRef = null;
+      // set emptyView
+      this._emptyViewRef = this._viewContainer.createEmbeddedView(this._emptyTemplateRef, this._context);
     }
   }
 }
@@ -156,5 +151,6 @@ export class RxContextContext {
 export enum RxContextViewType {
   DEFAULT = 1,
   ERROR,
-  COMPLETE
+  COMPLETE,
+  EMPTY
 }
