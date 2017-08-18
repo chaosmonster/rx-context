@@ -2,9 +2,11 @@ import {
   ChangeDetectorRef,
   Directive,
   EmbeddedViewRef,
-  Input, OnChanges,
+  Input,
+  OnChanges,
   OnDestroy,
-  OnInit, SimpleChange, SimpleChanges,
+  OnInit,
+  SimpleChanges,
   TemplateRef,
   ViewContainerRef
 } from '@angular/core';
@@ -48,7 +50,7 @@ export class RxContextDirective implements OnInit, OnChanges, OnDestroy {
     this._emptyViewRef = null;
   }
 
-  constructor(private cdr: ChangeDetectorRef, private _viewContainer: ViewContainerRef, templateRef: TemplateRef<any>) {
+  constructor(private _viewContainer: ViewContainerRef, templateRef: TemplateRef<any>) {
     this._defaultTemplateRef = templateRef;
   }
 
