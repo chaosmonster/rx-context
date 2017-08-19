@@ -1,6 +1,6 @@
 {
   "name": "rx-context-development",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -11,11 +11,9 @@
     "_clean_pre": "rimraf ./dist",
     "_ngc": "ngc -p src/lib/tsconfig.lib.json",
     "_copyPackage": "cp src/lib/package.json dist/package.json",
-    "_copyReadme": "cp src/lib/README.md dist/README.md",
+    "_copyReadme": "cp ./README.md dist/README.md",
     "build": "npm run _clean_pre && npm run _ngc && npm run _copyPackage && npm run _copyReadme",
-    "prepublish": "npm run build && cd ./dist",
-    "postpublish": "cd ../dist",
-    "publish": "npm publish"
+
   },
   "private": true,
   "devDependencies": {
