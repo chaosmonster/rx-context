@@ -12,7 +12,7 @@
     "_ngc": "ngc -p src/lib/tsconfig.lib.json",
     "_copyPackage": "cp src/lib/package.json dist/package.json",
     "_copyReadme": "cp src/lib/README.md dist/README.md",
-    "build": "npm run _clean_pre && npm run _ngc && npm run _copyPackage",
+    "build": "npm run _clean_pre && npm run _ngc && npm run _copyPackage && npm run _copyReadme",
     "prepublish": "npm run build && cd ./dist",
     "postpublish": "cd ../dist",
     "publish": "npm publish"

@@ -1,6 +1,6 @@
 {
   "name": "rx-context",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "license": "MIT",
   "private": false,
   "module": "index.js",
@@ -8,5 +8,9 @@
     "@angular/core": "^4.2.4",
     "rxjs": "^5.4.2",
     "zone.js": "^0.8.14"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chaosmonster/rx-context.git"
   }
 }
