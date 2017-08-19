@@ -2,7 +2,7 @@
   "name": "rx-context",
   "version": "0.1.0",
   "license": "MIT",
-  "private": true,
+  "private": false,
   "module": "index.js",
   "peerDependencies": {
     "@angular/core": "^4.2.4",
