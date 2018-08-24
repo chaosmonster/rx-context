@@ -9,8 +9,7 @@ import {
   TemplateRef,
   ViewContainerRef
 } from '@angular/core';
-import {Observable} from 'rxjs/Observable';
-import {Subscription} from 'rxjs/Subscription';
+import {Observable, Subscription} from 'rxjs';
 
 @Directive({
   selector: '[rxContext][rxContextOn]'

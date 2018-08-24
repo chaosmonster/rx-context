@@ -14,6 +14,16 @@
     "lib": [
       "es2017",
       "dom"
-    ]
+    ],
+    "module": "es2015",
+    "baseUrl": "./",
+    "paths": {
+      "rx-context": [
+        "dist/rx-context"
+      ],
+      "rx-context/*": [
+        "dist/rx-context/*"
+      ]
+    }
   }
 }
